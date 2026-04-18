@@ -14,12 +14,13 @@ body {
 
 h1 {
   color:#00aaff;
+  margin:20px;
 }
 
 #gallery {
   display:flex;
   flex-wrap:wrap;
-  gap:10px;
+  gap:15px;
   justify-content:center;
 }
 
@@ -27,7 +28,43 @@ img {
   width:150px;
   height:250px;
   object-fit:cover;
-  border-radius:10px;
+  border-radius:12px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+img:hover {
+  transform:scale(1.05);
+}
+
+/* عرض الصورة عند الضغط */
+#viewer {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.9);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+}
+
+#viewer img {
+  width:90%;
+  max-width:500px;
+  height:auto;
+}
+
+button {
+  margin-top:15px;
+  padding:10px 20px;
+  border:none;
+  border-radius:8px;
+  background:#00aaff;
+  color:white;
+  cursor:pointer;
 }
 </style>
 </head>
@@ -38,13 +75,45 @@ img {
 
 <div id="gallery"></div>
 
+<!-- نافذة عرض الصورة -->
+<div id="viewer">
+  <img id="fullImg">
+  <button onclick="download()">تحميل</button>
+  <button onclick="closeViewer()">إغلاق</button>
+</div>
+
 <script>
 const gallery = document.getElementById("gallery");
+const viewer = document.getElementById("viewer");
+const fullImg = document.getElementById("fullImg");
 
+let currentImage = "";
+
+// 👇 غير الرقم حسب عدد صورك
 for (let i = 1; i <= 70; i++) {
   const img = document.createElement("img");
   img.src = "images/(" + i + ").jpg";
+
+  img.onclick = () => {
+    currentImage = img.src;
+    fullImg.src = currentImage;
+    viewer.style.display = "flex";
+  };
+
   gallery.appendChild(img);
+}
+
+// تحميل الصورة
+function download() {
+  const a = document.createElement("a");
+  a.href = currentImage;
+  a.download = "Astros-wallpaper.jpg";
+  a.click();
+}
+
+// إغلاق
+function closeViewer() {
+  viewer.style.display = "none";
 }
 </script>
 
