@@ -41,10 +41,9 @@ img {
 <script>
 const gallery = document.getElementById("gallery");
 
-// 👇 غير الرقم حسب عدد صورك
 for (let i = 1; i <= 70; i++) {
   const img = document.createElement("img");
-  img.src = "images/" + i + ".jpg";
+  img.src = "images/(" + i + ").jpg";
   gallery.appendChild(img);
 }
 </script>
