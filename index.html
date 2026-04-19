@@ -1,121 +1,67 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-<meta charset="UTF-8">
-<title>Astros wallpaper</title>
+  <meta charset="UTF-8">
+  <title>Astros wallpaper</title>
 
-<style>
-body {
-  background:#111;
-  color:white;
-  text-align:center;
-  font-family:Arial;
-}
+  <style>
+    body {
+      background: black;
+      color: #00aaff;
+      text-align: center;
+      font-family: Arial;
+    }
 
-h1 {
-  color:#00aaff;
-  margin:20px;
-}
+    h1 {
+      margin: 20px;
+    }
 
-#gallery {
-  display:flex;
-  flex-wrap:wrap;
-  gap:15px;
-  justify-content:center;
-}
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 15px;
+      padding: 20px;
+    }
 
-img {
-  width:150px;
-  height:250px;
-  object-fit:cover;
-  border-radius:12px;
-  cursor:pointer;
-  transition:0.3s;
-}
+    .gallery img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 2px solid #333;
+      transition: 0.3s;
+    }
 
-img:hover {
-  transform:scale(1.05);
-}
-
-/* عرض الصورة عند الضغط */
-#viewer {
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.9);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-}
-
-#viewer img {
-  width:90%;
-  max-width:500px;
-  height:auto;
-}
-
-button {
-  margin-top:15px;
-  padding:10px 20px;
-  border:none;
-  border-radius:8px;
-  background:#00aaff;
-  color:white;
-  cursor:pointer;
-}
-</style>
+    .gallery img:hover {
+      transform: scale(1.05);
+      border-color: #00aaff;
+    }
+  </style>
 </head>
 
 <body>
 
-<h1>Astros wallpaper</h1>
+  <h1>Astros wallpaper</h1>
 
-<div id="gallery"></div>
+  <div class="gallery" id="gallery"></div>
 
-<!-- نافذة عرض الصورة -->
-<div id="viewer">
-  <img id="fullImg">
-  <button onclick="download()">تحميل</button>
-  <button onclick="closeViewer()">إغلاق</button>
-</div>
+  <script>
+    const gallery = document.getElementById("gallery");
 
-<script>
-const gallery = document.getElementById("gallery");
-const viewer = document.getElementById("viewer");
-const fullImg = document.getElementById("fullImg");
+    // يقرأ الصور من 1 إلى 70
+    for (let i = 1; i <= 70; i++) {
+      let img = document.createElement("img");
+      img.src = "images/" + i + ".jpg";
+      img.alt = "img " + i;
 
-let currentImage = "";
+      // إذا الصورة ما لقاها يخفيها
+      img.onerror = function () {
+        this.style.display = "none";
+      };
 
-// 👇 غير الرقم حسب عدد صورك
-for (let i = 1; i <= 70; i++) {
-  const img = document.createElement("img");
-  img.src = "images/(" + i + ").jpg";
-
-  img.onclick = () => {
-    currentImage = img.src;
-    fullImg.src = currentImage;
-    viewer.style.display = "flex";
-  };
-
-  gallery.appendChild(img);
-}
-
-// تحميل الصورة
-function download() {
-  const a = document.createElement("a");
-  a.href = currentImage;
-  a.download = "Astros-wallpaper.jpg";
-  a.click();
-}
-
-// إغلاق
-function closeViewer() {
-  viewer.style.display = "none";
-}
-</script>
+      gallery.appendChild(img);
+    }
+  </script>
 
 </body>
 </html>
